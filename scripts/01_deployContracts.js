@@ -214,7 +214,7 @@ async function main() {
       JSON.stringify(addresses, null, 2)
     );
     
-    console.log(`💾 Addresses saved to: deployed-addresses-${networkName}.json`);
+    console.log(`Paste your 💾 Addresses to Address.js deployed-Network${networkName}`);
     
   } catch (error) {
     console.error("\n❌ DEPLOYMENT FAILED:");

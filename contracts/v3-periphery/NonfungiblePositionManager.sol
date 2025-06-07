@@ -72,7 +72,7 @@ contract NonfungiblePositionManager is
         address _factory,
         address _WETH9,
         address _tokenDescriptor_
-    ) ERC721Permit('My Fork UniV3', 'UNI-V3', '1') PeripheryImmutableState(_factory, _WETH9) {
+    ) ERC721Permit('Fork UniV3', 'UNI-V3', '1') PeripheryImmutableState(_factory, _WETH9) {
         _tokenDescriptor = _tokenDescriptor_;
     }
 
