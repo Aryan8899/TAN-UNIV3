@@ -1,0 +1,17 @@
+{
+  "network": "sepolia",
+  "chainId": 11155111,
+  "deployer": "0xc285D7192174486f038A4de931cb4F99DdaeF4C3",
+  "recipient": "0xc285D7192174486f038A4de931cb4F99DdaeF4C3",
+  "contracts": {
+    "TETHER_ADDRESS": "0x27400605A7EB8ff7f1C6aE147b2B997Bed4f2538",
+    "USDC_ADDRESS": "0xCb9596022086F0F5041071A24B9e1e7D22f26a34",
+    "WRAPPED_BITCOIN_ADDRESS": "0xb647726a9D1CebCF41940B921787288a7a997423"
+  },
+  "balances": {
+    "USDT": "0.0",
+    "USDC": "0.0",
+    "WBTC": "0.0"
+  },
+  "timestamp": "2025-06-07T09:20:35.282Z"
+}
