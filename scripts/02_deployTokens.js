@@ -20,6 +20,15 @@ async function getSigner() {
   return owner;
 }
 
+// Helper: get current gas price and add 20% buffer
+async function getGasParams() {
+  const gasPrice = await ethers.provider.getGasPrice();
+  const maxFeePerGas = gasPrice.mul(12).div(10);         // +20%
+  const maxPriorityFeePerGas = ethers.utils.parseUnits("3", "gwei"); // fixed 3 gwei
+
+  return { maxFeePerGas, maxPriorityFeePerGas };
+}
+
 async function deployWithRetry(contractName, owner, maxRetries = 3) {
   for (let i = 0; i < maxRetries; i++) {
     try {
@@ -54,12 +63,12 @@ async function deployWithRetry(contractName, owner, maxRetries = 3) {
   }
 }
 
-async function mintTokens(contract, tokenName, owner, recipient, amount) {
+async function mintTokens(contract, tokenName, owner, recipient, amount, gasParams) {
   console.log(`\n🪙 Minting ${amount} ${tokenName} tokens...`);
   
   try {
     const mintAmount = ethers.utils.parseEther(amount);
-    const tx = await contract.connect(owner).mint(recipient.address, mintAmount);
+    const tx = await contract.connect(owner).mint(recipient.address, mintAmount, gasParams);
     await tx.wait();
     
     console.log(`✅ Minted ${amount} ${tokenName} to ${recipient.address}`);
@@ -82,8 +91,8 @@ async function main() {
   console.log("🚀 Starting Token Deployment");
   
   const owner = await getSigner();
+  const gasParams = await getGasParams();
 
-  
   try {
     // Deploy tokens
     console.log("\n" + "=".repeat(40));
@@ -117,28 +126,14 @@ async function main() {
       console.log(`✅ All deployments confirmed`);
     }
     
-    // Mint tokens
+    // Mint tokens with gas params
     console.log("\n" + "=".repeat(40));
     console.log("MINTING TOKENS");
     console.log("=".repeat(40));
     
-    await tether.connect(owner).mint(
-      owner.address,
-      ethers.utils.parseEther('100000')
-    );
-    console.log(`✅ Minted 100,000 USDT to ${owner.address}`);
-    
-    await usdc.connect(owner).mint(
-      owner.address,
-      ethers.utils.parseEther('100000')
-    );
-    console.log(`✅ Minted 100,000 USDC to ${owner.address}`);
-    
-    await wrappedBitcoin.connect(owner).mint(
-      owner.address,
-      ethers.utils.parseEther('100000')
-    );
-    console.log(`✅ Minted 100,000 WBTC to ${owner.address}`);
+    await mintTokens(tether, 'USDT', owner, owner, '100000', gasParams);
+    await mintTokens(usdc, 'USDC', owner, owner, '100000', gasParams);
+    await mintTokens(wrappedBitcoin, 'WBTC', owner, owner, '100000', gasParams);
     
     // Print final results
     console.log("\n" + "=".repeat(50));
@@ -190,7 +185,6 @@ async function main() {
     console.error("\n❌ TOKEN DEPLOYMENT FAILED:");
     console.error(error);
     
-    // Additional error context
     if (error.message.includes('insufficient funds')) {
       console.error("\n💡 Possible solutions:");
       console.error("   1. Add more ETH to your deployer account");
@@ -201,26 +195,6 @@ async function main() {
     throw error;
   }
 }
-
-/*
-Usage Examples:
-- Local deployment: npx hardhat run --network localhost scripts/02_deployTokens.js
-- Sepolia testnet: npx hardhat run --network sepolia scripts/02_deployTokens.js
-- Mainnet: npx hardhat run --network mainnet scripts/02_deployTokens.js
-
-Prerequisites:
-- Hardhat configured with proper networks
-- Wallet with sufficient ETH for gas fees
-- Token contracts (Tether, UsdCoin, WrappedBitcoin) in contracts folder
-
-Network Configuration Example (hardhat.config.js):
-networks: {
-  sepolia: {
-    url: process.env.SEPOLIA_URL,
-    accounts: [process.env.PRIVATE_KEY, process.env.PRIVATE_KEY_2]
-  }
-}
-*/
 
 main()
   .then(() => process.exit(0))

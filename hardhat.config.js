@@ -1,5 +1,4 @@
 require("@nomiclabs/hardhat-ethers");
-require("@nomicfoundation/hardhat-verify");
 require("dotenv").config();
 
 module.exports = {
@@ -8,20 +7,20 @@ module.exports = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200
-      }
-    }
+        runs: 200,
+      },
+    },
   },
   networks: {
-    sepolia: {
-      url: process.env.ALCHEMY_SEPOLIA_RPC,
-      accounts: [process.env.PRIVATE_KEY],
-      chainId: 11155111
-    }
+    tan: {
+      url: "https://tan-devnetrpc2.tan.live", // TAN RPC
+      accounts: [process.env.PRIVATE_KEY],    // Your wallet private key
+      chainId: 4442,
+      
+      // Set gas fees as strings or numbers directly (values in wei)
+      maxFeePerGas: 50_000_000_000,       // 50 gwei in wei (50 * 10^9)
+      maxPriorityFeePerGas: 3_000_000_000, // 3 gwei in wei (3 * 10^9)
+      gas: 2100000,
+    },
   },
-  etherscan: {
-    apiKey: {
-      sepolia: process.env.ETHERSCAN_API_KEY
-    }
-  }
 };

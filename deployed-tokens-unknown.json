@@ -1,0 +1,17 @@
+{
+  "network": "unknown",
+  "chainId": 4442,
+  "deployer": "0xc285D7192174486f038A4de931cb4F99DdaeF4C3",
+  "recipient": "0xc285D7192174486f038A4de931cb4F99DdaeF4C3",
+  "contracts": {
+    "TETHER_ADDRESS": "0x9B05c3d0FE02a8691E1E069fAfd168640A223EEe",
+    "USDC_ADDRESS": "0x58b7c1e927efCb05bf0FE53556d4BcB382F3A367",
+    "WRAPPED_BITCOIN_ADDRESS": "0xDB80C310522b11764c4A01Cb13A0D5725B24ef60"
+  },
+  "balances": {
+    "USDT": "100000.0",
+    "USDC": "100000.0",
+    "WBTC": "100000.0"
+  },
+  "timestamp": "2025-06-09T08:48:47.465Z"
+}
