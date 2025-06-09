@@ -42,9 +42,9 @@ const positionManagerAddress = addresses.POSITION_MANAGER_ADDRESS;
   const positionManager = await ethers.getContractAt(positionManagerAbi, positionManagerAddress);
 
   // --- Parameters ---
-  const fee = 500; // 0.05%
-  const tickLower = -20;
-  const tickUpper = 20;
+  const fee = 3000; // 0.03%
+  const tickLower = -60;
+  const tickUpper = 60;
 
   // Amounts to provide (adjust these for your liquidity)
   // Fetch decimals to convert amount properly
